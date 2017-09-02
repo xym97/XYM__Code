@@ -1,0 +1,43 @@
+  1 #include<stdio.h>
+  2 #include<sys/types.h>
+  3 #include<errno.h>
+  4 #include<string.h>
+  5 #include<unistd.h>
+  6 
+  7 int main()
+  8 {
+  9     int _pipe[2];
+ 10     int ret = pipe(_pipe);
+ 11     if(-1 == ret){
+ 12         printf(" Create pipe error!, error code id %d",ret);
+ 13     }
+ 14     pid_t pid = fork();
+ 15     if(pid < 0){
+ 16         perror("fork");
+ 17     }else if(0 ==  pid ){
+ 18         //Child
+ 19         close(_pipe[0]);
+ 20         char* masg = NULL;
+ 21         int i = 0;
+ 22         while( i < 10){
+ 23             masg = "I am Child!";
+ 24             write(_pipe[1],masg,strlen(masg) + 1);
+ 25             sleep(1);
+ 26             ++i;
+ 27         }
+ 28     }else if( 0 < pid){
+ 29         //Father
+ 30         close(_pipe[1]);
+ 31         char masg_buf[20];
+ 32         int i = 0;
+ 33         while( i < 10){
+ 34             memset(masg_buf, '\0',sizeof(masg_buf));
+ 35             read(_pipe[0],masg_buf,sizeof(masg_buf));
+ 36             printf("Child said :%s\n",masg_buf);
+ 37             ++i;
+ 38         }
+ 39     }
+ 40 
+ 41     return 0;
+ 42 }
+ 43 
