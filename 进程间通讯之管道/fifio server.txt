@@ -1,0 +1,29 @@
+     #include<stdio.h>
+  2  #include<sys/types.h>
+  3  #include<sys/stat.h>
+  4  #include<unistd.h>
+  5  #include<fcntl.h>
+  6  #include<string.h>
+  7  int main()
+  8  {
+  9      int fd = open("./mypipe",O_WRONLY);//在发出数据的文件中以写阻塞方式打开管道文件
+ 10      if(fd<0)
+ 11      {
+ 12          printf("open file error!\n");
+ 13          return 2;
+ 14      }
+ 15      char buf[1024];//定义输出缓冲区
+ 16      while(1)
+ 17      {
+ 18          printf("please enter # ");
+ 19          fflush(stdout);
+ 20          ssize_t ret = read(0,buf,sizeof(buf)-1);//从标准输入中获取数据
+ 21          if(ret>0)
+ 22          {
+ 23              buf[ret-1] = 0;
+ 24              write(fd,buf,strlen(buf));//把输出缓冲区的数据写给管道文件
+ 25          }
+ 26      }
+ 27      close(fd);//关闭写端
+ 28     return 0;
+ 29 }
