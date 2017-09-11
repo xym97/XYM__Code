@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "输入秒数计算日期", "输入秒数计算日期\输入秒数计算日期.vcxproj", "{BAF37489-8665-4078-84F4-4CD6F22DA40B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAF37489-8665-4078-84F4-4CD6F22DA40B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BAF37489-8665-4078-84F4-4CD6F22DA40B}.Debug|Win32.Build.0 = Debug|Win32
+		{BAF37489-8665-4078-84F4-4CD6F22DA40B}.Release|Win32.ActiveCfg = Release|Win32
+		{BAF37489-8665-4078-84F4-4CD6F22DA40B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
