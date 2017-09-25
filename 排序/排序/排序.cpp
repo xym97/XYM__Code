@@ -65,47 +65,69 @@ void ShellSort(T* arr, size_t n)
 }
 
 //快速排序之 左右指针法(递归实现)
-template<class T>
-T SortPart1(T* arr, size_t begin, size_t end)
-{
-	assert(arr);
-	int left = begin;
-	int right = end;
-	int key = arr[end];
-	while (left < right)
-	{
-		while (arr[left] <= key && left < right){
-			++left;
-		}
-		while (arr[right] >= key && left < right){
-			--right;
-		}
-		if (left != right)
-			swap(arr[left], arr[right]);
-	}
-	swap(arr[left], arr[end]);
-	return left;
-}
-
-template<class T>
-void _FastSort1(T* arr, size_t begin, size_t end)
-{
-	assert(arr);
-	if (begin >= end)
-		return;
-	T div = SortPart1(arr, begin, end);
-	_FastSort1(arr, div + 1, end);
-	_FastSort1(arr, begin,div - 1);
-}
-
-template<class T>
-void FastSort1(T* arr, size_t begin, size_t end)
-{
-	_FastSort1(arr, begin, end);
-	Print(arr, end+1);
-}
+//template<class T>
+//T SortPart1(T* arr, size_t begin, size_t end)
+//{
+//	assert(arr);
+//	int left = begin;
+//	int right = end;
+//	int key = arr[end];
+//	while (left < right)
+//	{
+//		while (arr[left] <= key && left < right){
+//			++left;
+//		}
+//		while (arr[right] >= key && left < right){
+//			--right;
+//		}
+//		if (left != right)
+//			swap(arr[left], arr[right]);
+//	}
+//	swap(arr[left], arr[end]);
+//	return left;
+//}
+//
+//template<class T>
+//void _FastSort1(T* arr, size_t begin, size_t end)
+//{
+//	assert(arr);
+//	if (begin >= end)
+//		return;
+//	T div = SortPart1(arr, begin, end);
+//	_FastSort1(arr, div + 1, end);
+//	_FastSort1(arr, begin,div - 1);
+//	
+//}
+//
+//template<class T>
+//void FastSort1(T* arr, size_t begin, size_t end)
+//{
+//	_FastSort1(arr, begin, end);
+//    Print(arr, end + 1);
+//	
+//}
 
 //快速排序之挖坑法 （递归实现）
+//template<typename T>
+//T SortPart2(T* arr, size_t begin, size_t end)
+//{
+//	assert(arr);
+//	T key = arr[end];
+//	while (begin != end){
+//		while (arr[begin] <= key && begin < end)
+//			++begin;
+//		if (begin != end)
+//			arr[end] = arr[begin];
+//		while (arr[end] >= key && begin < end)
+//			--end;
+//		if (begin != end)
+//			arr[begin] = arr[end];
+//	}
+//	if (begin == end)
+//		arr[begin] = key;
+//	return begin;
+//}
+
 template<typename T>
 T SortPart2(T* arr, size_t begin, size_t end)
 {
@@ -147,19 +169,38 @@ void FastSort2(T* arr, size_t begin, size_t end)
 
 //快速排序之前后指针法 （递归实现）
 
+//template<class T>
+//T SortPart3(T* arr, size_t begin, size_t end)
+//{
+//	assert(arr);
+//	int cur = begin;
+//	int prev = cur - 1;
+//	int key = arr[end];
+//	while (cur < end){
+//		while (cur < end && arr[cur] >= key)
+//			++cur;
+//		if (cur < end && ++prev != cur)
+//			swap(arr[prev], arr[cur]);
+//		++cur;
+//	}
+//	swap(arr[++prev], arr[end]);
+//	return prev;
+//}
+
 template<class T>
 T SortPart3(T* arr, size_t begin, size_t end)
 {
 	assert(arr);
-	int cur = begin;
-	int prev = cur - 1;
+	size_t cur = begin;
+	size_t prev = cur - 1;
 	int key = arr[end];
 	while (cur < end){
 		while (cur < end && arr[cur] >= key)
-			++cur;
+			cur++;
 		if (cur < end && ++prev != cur)
 			swap(arr[prev], arr[cur]);
 		++cur;
+
 	}
 	swap(arr[++prev], arr[end]);
 	return prev;
@@ -227,7 +268,63 @@ void SelectSort2(T* arr, size_t n)
 	Print(arr, n);
 }
 
+//堆排序   堆排序实际上是一种选择排序
+template<class T>
+struct Greater
+{
+	bool operator ()(const T& l, const T& r)
+	{
+		return l > r;
+	}
+};
 
+template<class T>
+struct Less
+{
+	bool operator ()(const T& l, const T& r)
+	{
+		return l < r;
+	}
+};
+
+template<class T, class Compare = Greater<int>>
+void AdjustDown(T* arr, size_t N, int root)
+{
+	int parent = root;
+	int child = parent * 2 + 1;
+	while (child < N){//这里的N 是传进来的end 此时向下调整的堆已经不包括堆中最后一个最大的数。
+		if (child + 1 < N && Compare()( arr[child + 1],arr[child]))
+		{
+			child++;
+		}
+		else if (Compare()(arr[child],arr[parent])){
+			swap(arr[child], arr[parent]);
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else{
+			break;
+		}
+	}
+}
+
+template<class T>
+void HeapSort(T* arr, int N)
+{
+	assert(arr);
+	for (int i = (N - 2) >> 1; i >= 0; --i)
+	{
+		AdjustDown(arr,N,i);//建堆
+	}
+	int end = N - 1;
+	while (end)//排序
+	{
+		swap(arr[0], arr[end]);
+		AdjustDown(arr, end, 0);//自堆顶开始向下调整。
+		--end;
+	}
+	Print(arr, N);
+}
 
 int main()
 {
@@ -239,7 +336,8 @@ int main()
 	//FastSort1<int>(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
 	//FastSort2<int>(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
 	//FastSort3<int>(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
-	SelectSort2<int>(arr, sizeof(arr) / sizeof(arr[0]));
+	HeapSort(arr, sizeof(arr) / sizeof(arr[0]));
+	//SelectSort2<int>(arr, sizeof(arr) / sizeof(arr[0]));
 	system("pause");
 	return 0;
 }
