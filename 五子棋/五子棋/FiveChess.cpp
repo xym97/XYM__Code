@@ -37,7 +37,7 @@ public:
 				    if (count++ >= 9 && GetWiner(Pos1, 1, flag1))
 						break;
 					ComputerGo(Pos2, flag2);
-					if (count >= 10 && GetWiner(Pos2, 0, flag2))
+					if (count++ >= 10 && GetWiner(Pos2, 0, flag2))
 					   break;
 				}
 				else if (mode == 2){//Íæ¼ÒVSÍæ¼Ò

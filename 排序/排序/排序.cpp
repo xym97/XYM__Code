@@ -169,24 +169,6 @@ void FastSort2(T* arr, size_t begin, size_t end)
 
 //快速排序之前后指针法 （递归实现）
 
-//template<class T>
-//T SortPart3(T* arr, size_t begin, size_t end)
-//{
-//	assert(arr);
-//	int cur = begin;
-//	int prev = cur - 1;
-//	int key = arr[end];
-//	while (cur < end){
-//		while (cur < end && arr[cur] >= key)
-//			++cur;
-//		if (cur < end && ++prev != cur)
-//			swap(arr[prev], arr[cur]);
-//		++cur;
-//	}
-//	swap(arr[++prev], arr[end]);
-//	return prev;
-//}
-
 template<class T>
 T SortPart3(T* arr, size_t begin, size_t end)
 {
@@ -326,6 +308,57 @@ void HeapSort(T* arr, int N)
 	Print(arr, N);
 }
 
+void Merge(int* arr, int* tmp,int begin1, int end1,int begin2, int end2)
+{
+	assert(arr);
+	int begin = begin1;
+	int index = begin1;
+	while (begin1 <= end1 && begin2 <= end2){
+		if (arr[begin1] <= arr[begin2]){
+			tmp[index++] = arr[begin1++];
+		}
+		else{
+			tmp[index++] = arr[begin2++];
+		}
+	}
+
+	while (begin1 <= end1){
+		tmp[index++] = arr[begin1++];
+	}
+
+	while (begin2 <= end2){
+		tmp[index++] = arr[begin2++];
+	}
+
+	while (begin <= end2){
+		arr[begin] = tmp[begin];
+		begin++;
+	}
+}
+
+void _MergeSort(int* arr, int* tmp, int left, int right)
+{
+	assert(arr);
+	if (left >= right)
+		return;
+	int mid = ((left ^ right) >> 1) + (left & right);
+	_MergeSort(arr, tmp, left, mid);
+	_MergeSort(arr, tmp, mid+1,right);
+	Merge(arr, tmp, left, mid, mid + 1, right);
+
+}
+
+void MergeSort(int* arr, int N)
+{
+	assert(arr);
+	int left = 0;
+	int right = N - 1;
+	int* tmp = new int[N];
+	_MergeSort(arr, tmp, 0, right);
+	delete[] tmp;
+	Print(arr, N);
+}
+
 int main()
 {
 	int arr[14] = { 7, 3, 46, 6, 0, 2, 90, 4, 3, 56, 12, 8, 45, 2 };
@@ -336,7 +369,8 @@ int main()
 	//FastSort1<int>(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
 	//FastSort2<int>(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
 	//FastSort3<int>(arr, 0, sizeof(arr) / sizeof(arr[0]) - 1);
-	HeapSort(arr, sizeof(arr) / sizeof(arr[0]));
+	//HeapSort(arr, sizeof(arr) / sizeof(arr[0]));
+	MergeSort(arr, sizeof(arr) / sizeof(arr[0]));
 	//SelectSort2<int>(arr, sizeof(arr) / sizeof(arr[0]));
 	system("pause");
 	return 0;

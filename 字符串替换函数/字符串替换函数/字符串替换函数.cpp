@@ -58,12 +58,12 @@ string Formatstring2(const string& str, int n, vector<char>& arg, int m)
 		return ret;
 	for (; i < n; ++i){
 		if (str[i] == '%' && i + 1 < n && str[i + 1] == 's'){
-			ret += arg[count];
+			ret.push_back(arg[count]);
 			i++;
 			count++;
 		}
 		else{
-			ret += str[i];
+			ret.push_back(str[i]);
 		}
 		
 	}
