@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "在字符串中找有几个 ‘0’  ‘1’出现次数相同的字串", "在字符串中找有几个 ‘0’  ‘1’出现次数相同的字串\在字符串中找有几个 ‘0’  ‘1’出现次数相同的字串.vcxproj", "{FE8DD650-5BD5-4089-89C2-8D9C35C20845}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE8DD650-5BD5-4089-89C2-8D9C35C20845}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FE8DD650-5BD5-4089-89C2-8D9C35C20845}.Debug|Win32.Build.0 = Debug|Win32
+		{FE8DD650-5BD5-4089-89C2-8D9C35C20845}.Release|Win32.ActiveCfg = Release|Win32
+		{FE8DD650-5BD5-4089-89C2-8D9C35C20845}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
